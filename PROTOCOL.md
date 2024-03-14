@@ -1,6 +1,6 @@
 # Client/Server Communication
 
-**Version: 1**
+## Version: 1
 
 **Client** is defined as the GhostText browser extension.
 
@@ -14,7 +14,7 @@ between client and server as a series of user interactions.
 The Client sends an HTTP `GET /` request to `localhost` to the configured port
 (default 4001).
 
-```
+```data
 GET / HTTP/1.1
 Host: http://localhost:4001
 ```
@@ -28,9 +28,9 @@ The JSON payload is an object with the following properties:
 | `ProtocolVersion` | Number | The protocol version                 |
 | `WebSocketPort`   | Number | The port for the listening WebSocket. This ideally is the same configured HTTP port (default 4001) but it doesn’t have to be. |
 
-#### Example
+### Example
 
-```
+```data
 200 OK
 Content-Type: application/json
 
@@ -54,7 +54,7 @@ connect) the Client sends via the WebSocket a JSON object message with the
 following properties:
 
 | Property     | Value                  | Description                                                                                    |
-| ------------ | ---------------------- | ---------------------------------------------------------------------------------------------- |
+|--------------|------------------------|------------------------------------------------------------------------------------------------|
 | `title`      | String                 | The title of the document                                                                      |
 | `url`        | String                 | The [host][mdn-host] of the document's url                                                     |
 | `syntax`     | String                 | _Not used_                                                                                     |
@@ -63,7 +63,7 @@ following properties:
 
 [mdn-host]: https://developer.mozilla.org/en-US/docs/Web/API/URL/host
 
-#### Selection Object
+### Selection Object
 
 Selection objects have the following properties:
 
@@ -74,20 +74,20 @@ Selection objects have the following properties:
 
 [mdn-code-units]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String#utf-16_characters_unicode_code_points_and_grapheme_clusters
 
-#### Example
+### Selection Object Example
 
 ```json
 {
-	"title": "Test Document",
-	"url": "http://example.com/test-document",
-	"syntax": "",
-	"text": "Adipisicing excepturi voluptate nostrum quas veritatis?",
-	"selections": [
-		{
-			"start": 10,
-			"end": 20
-		}
-	]
+ "title": "Test Document",
+ "url": "http://example.com/test-document",
+ "syntax": "",
+ "text": "Adipisicing excepturi voluptate nostrum quas veritatis?",
+ "selections": [
+  {
+   "start": 10,
+   "end": 20
+  }
+ ]
 }
 ```
 
@@ -101,37 +101,39 @@ WebSocket a JSON object message with at least one of the following properties:
 | `text`       | String                 | The temporary file content                                                                     |
 | `selections` | Array(SelectionObject) | An array of selection objects that describe the user's current cursor selections in the editor |
 
-#### Example
+### Change Example
 
 ```json
 {
-	"text": "Adipisicing ea lorem expedita facere nesciunt",
-	"selections": [
-		{
-			"start": 20,
-			"end": 30
-		}
-	]
+ "text": "Adipisicing ea lorem expedita facere nesciunt",
+ "selections": [
+  {
+   "start": 20,
+   "end": 30
+  }
+ ]
 }
 ```
+
 ```json
 {
-	"text": "Adipisicing ea lorem expedita facere nesciunt"
+ "text": "Adipisicing ea lorem expedita facere nesciunt"
 }
 ```
+
 ```json
 {
-	"text": "Adipisicing ea lorem expedita facere nesciunt",
-	"selections": [
-		{
-			"start": 20,
-			"end": 30
-		},
-		{
-			"start": 50,
-			"end": 51
-		}
-	]
+ "text": "Adipisicing ea lorem expedita facere nesciunt",
+ "selections": [
+  {
+   "start": 20,
+   "end": 30
+  },
+  {
+   "start": 50,
+   "end": 51
+  }
+ ]
 }
 ```
 
@@ -153,15 +155,15 @@ traffic.
 In cases of using an external editor that does not support live updates the
 exchange can be quite linear:
 
-1.  Server receives a `GET /` request
-2.  Server opens a WebSocket
-3.  Server responds with JSON describing the WS port number
-4.  Client establishes a WS connection to the Server with above port number
-5.  Client sends first JSON payload
-6.  Server creates temporary file with the content provided in JSON payload
-7.  Server spawns editor
-8.  Server waits for editor to exist
-9.  Server reads temp file
+1. Server receives a `GET /` request
+2. Server opens a WebSocket
+3. Server responds with JSON describing the WS port number
+4. Client establishes a WS connection to the Server with above port number
+5. Client sends first JSON payload
+6. Server creates temporary file with the content provided in JSON payload
+7. Server spawns editor
+8. Server waits for editor to exist
+9. Server reads temp file
 10. Server sends updated JSON payload
 11. Server closes WebSocket
 12. Server deletes temp file

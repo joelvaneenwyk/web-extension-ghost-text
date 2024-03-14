@@ -1,0 +1,14 @@
+# Custom Dictionary Words
+Adipisicing
+Brigante
+excepturi
+expedita
+facere
+fregante
+ghosttext
+Neovim
+nesciunt
+quas
+screencast
+veritatis
+voluptate
